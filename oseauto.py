@@ -3,23 +3,22 @@ import re
 import math
 import os
 
-etcdmastersdata = open("/etc/etcd/etcd.conf/etcd.conf", "r")
+
+etcdmasterdata = open("/etc/etcd/etcd.conf", "r")
 for line in etcdmasterdata:
    if re.match('ETCD_INITIAL', line):
-   print line
-
-
+    line = line
+#
 def string_cleanup(x, notwanted):
     for item in notwanted:
-        x = re.sub(item, '', x)
+        x = re.sub(item,'', x)
     return x
-
-
-unwanted_list= ['ETCD_INITIAL_CLUSTER=','https://', ':2380']
-line = string_cleanup(line, unwanted_list)
-print("newline: ", line)
+#
+unwanted_list= ['ETCD_INITIAL_CLUSTER=','https://',':2380','\n']
+newline = string_cleanup(line, unwanted_list)
+print("newline: ", newline)
     
-data = line
+data = newline
 data_list = re.split('=|,', data)
 
 host_name = data_list[::2]
@@ -44,5 +43,13 @@ b_dict = {}
 a_dict = dict(zip(host, host_name))
 b_dict = dict(zip(ip, host_ip))
 
-print a_dict
-print b_dict
+#print a_dict
+#print b_dict
+
+#
+for k,v in a_dict.items():
+    print str(k+'='+v)
+   
+#
+for k,v in b_dict.items():
+    print str(k+'='+v)
