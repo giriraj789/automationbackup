@@ -13,16 +13,14 @@ import subprocess
 
 ## Importing ETCD file from OSE master server, first server is always a preference and extracting OSE all master servers details
 
-ose = sys.argv[1]
-os.system("scp " + ose + ":/etc/etcd/etcd.conf etcd.conf")
+osemasterserver = sys.argv[1]
+os.system("scp " + osemasterserver + ":/etc/etcd/etcd.conf etcd.conf")
 
 etcdmasterdata = open("etcd.conf", "r")
 linedata = ""
 for line in etcdmasterdata:
     if line.startswith('ETCD_INITIAL_CLUSTER='):
      linedata = line
-
-print linedata
 
 ## Filter function for eliminating unwanted strings and characters from data
 
@@ -35,7 +33,6 @@ def string_cleanup(x, notwanted):
 
 unwanted_list= ['ETCD_INITIAL_CLUSTER=','https://',':2380']
 newline = string_cleanup(linedata, unwanted_list)
-print newline     
 data = newline
 data_list = re.split('=|,', data)
 
