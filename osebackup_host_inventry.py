@@ -76,8 +76,15 @@ for k, v in ip_dict.items():
 print ""
 print"[masters]"
 for k,v in host_dict.items():
-    print str(v)
+    print v
 print ""
+
+count = 0 
+while (count < y):
+ print "[master"+str(count+1)+"]"
+ print host_dict.values()[count]
+ count = count + 1
+
 print"[controller]"
 controllerhostname = os.uname()[1]
 ci = subprocess.check_output(("hostname", "-i"))
