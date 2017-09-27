@@ -3,7 +3,7 @@
 ### 1. Should be executed from Ansible controller server/system or jump box.
 ### 2. Python =<2.7.
 ### 3. Ansible inventry server/system configured with password less ssh to all OSE master servers. 
-### USE OF SCRIPT :::: <python> <scriptname> <osemaster1server_fqdn> <output_ansible_inventry_file>
+### USE OF SCRIPT :::: <python> <scriptname> <arg1_osemaster1server_fqdn> <arg2_output_ansible_inventry_file>
 ### FOR EXAMPLE::: python osebackup_host_inventry.py osemaster1.example.com > backuphosts
 
 import re 
