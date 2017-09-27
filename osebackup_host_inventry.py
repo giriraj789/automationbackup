@@ -48,7 +48,7 @@ y = int(len(host_name))
 ip = []
 count = 0
 while count < y:
- ip.append("masterip_" + str(count+1))
+ ip.append("master"+str(count+1)+"_ip")
  count = count + 1
 
 host = []
@@ -64,31 +64,39 @@ ip_dict = {}
 host_dict = dict(zip(host, host_name))
 ip_dict = dict(zip(ip, host_ip))
 
-## Creating Backup host inventory file 
-
-print "[OSEV3:children]\nmasters\ncontroller\nmaster1\nmaster2\nmaster3"
+####################################### Creating Backup host inventory file 
+print "[OSEV3:children]\nmasters\ncontroller"
+count = 0 
+while count > y:
+ print master(count+1)
+ count = count + 1 
 print ""
 print "[OSEV3:vars]\nansible_ssh_user=root"
-for k, v in host_dict.items():
+for (k, v), (i, j) in zip(host_dict.items(),ip_dict.items()):
    print str(k+'='+v)
-for k, v in ip_dict.items():
-   print str(k+'='+v)
+   print str(i+'='+j)
+
 print ""
 print"[masters]"
 for k,v in host_dict.items():
     print v
 print ""
-
 count = 0 
 while (count < y):
  print "[master"+str(count+1)+"]"
  print host_dict.values()[count]
  count = count + 1
-
+print ""
 print"[controller]"
 controllerhostname = os.uname()[1]
 ci = subprocess.check_output(("hostname", "-i"))
 controllerip = ci.strip('\n')
 print str(controllerhostname+'='+controllerip)
-
+###
+try:
+    os.remove("etcd.conf")
+except OSError:
+    pass
+#####
 #END
+#####
